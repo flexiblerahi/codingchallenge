@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Network;
+use App\Models\User;
+use Illuminate\Http\Request;
+
+class HomeController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function index()
+    {
+        $data = Network::where('user_id', auth()->id())->get();
+        $networks = ($data->first()) ? $data->first() : Network::create(['user_id' => auth()->id()]);
+        $sentreqlist = User::whereIn('id', explode(',', $networks->sent))->get(['id', 'name', 'email']);
+        $recievereqlist = User::whereIn('id', explode(',', $networks->receive))->get(['id', 'name', 'email']);
+        $connectionlist = User::whereIn('id', explode(',', $networks->connection))->with('network')->get(['id', 'name', 'email']);
+        $condition = array_merge(explode(',', $networks->sent), explode(',', $networks->receive), explode(',', $networks->connection), [0=> auth()->id()]);
+        $suggestioncount = User::whereNotIn('id', $condition)->get(['id', 'name', 'email']);
+        return view('home', compact('sentreqlist', 'recievereqlist', 'connectionlist', 'suggestioncount'));
+    }
+}
