@@ -9,7 +9,7 @@
           <td class="align-middle">
         </table>
         <div>
-            <button id="cancel_request_btn_" class="btn btn-danger me-1" onclick="">Withdraw Request</button>
+            <button id="cancel_request_btn_" class="btn btn-danger me-1" onclick="withdrawRequest({{$user->id}})">Withdraw Request</button>
         </div>
       </div>
     </div>

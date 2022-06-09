@@ -19,3 +19,7 @@ Route::get('/', function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/sendrequest', [App\Http\Controllers\NetworkController::class, 'sendrequest']);
+Route::post('/withdrawrequest', [App\Http\Controllers\NetworkController::class, 'withdrawrequest']);
+Route::post('/acceptrequest', [App\Http\Controllers\NetworkController::class, 'acceptrequest']);
+Route::post('/removeconnection', [App\Http\Controllers\NetworkController::class, 'removeconnection']);
+Route::get('/getsuggestion', [App\Http\Controllers\NetworkController::class, 'getsuggestion']);

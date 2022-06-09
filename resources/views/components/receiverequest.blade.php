@@ -9,7 +9,7 @@
         <td class="align-middle">
       </table>
       <div>
-          <button id="accept_request_btn_" class="btn btn-primary me-1" onclick="">Accept</button>
+          <button id="accept_request_btn_" class="btn btn-primary me-1" onclick="acceptRequest({{$user->id}})">Accept</button>
       </div>
     </div>
   </div>

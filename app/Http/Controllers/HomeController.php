@@ -17,11 +17,13 @@ class HomeController extends Controller
     {
         $data = Network::where('user_id', auth()->id())->get();
         $networks = ($data->first()) ? $data->first() : Network::create(['user_id' => auth()->id()]);
-        $sentreqlist = User::whereIn('id', explode(',', $networks->sent))->get(['id', 'name', 'email']);
-        $recievereqlist = User::whereIn('id', explode(',', $networks->receive))->get(['id', 'name', 'email']);
-        $connectionlist = User::whereIn('id', explode(',', $networks->connection))->with('network')->get(['id', 'name', 'email']);
+        // dd($networks->receive);
+        $sentreqlist = ($networks->sent) ? User::whereIn('id', explode(',', $networks->sent))->get(['id', 'name', 'email']) : array();
+        
+        $recievereqlist = ($networks->receive) ? User::whereIn('id', explode(',', $networks->receive))->get(['id', 'name', 'email']) : array();
+        $connectionlist = ($networks->connection) ? User::whereIn('id', explode(',', $networks->connection))->get(['id', 'name', 'email']) : array();
         $condition = array_merge(explode(',', $networks->sent), explode(',', $networks->receive), explode(',', $networks->connection), [0=> auth()->id()]);
-        $suggestioncount = User::whereNotIn('id', $condition)->get(['id', 'name', 'email']);
+        $suggestioncount = User::whereNotIn('id', $condition)->count();
         return view('home', compact('sentreqlist', 'recievereqlist', 'connectionlist', 'suggestioncount'));
     }
 }

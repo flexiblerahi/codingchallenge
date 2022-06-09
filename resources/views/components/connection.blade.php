@@ -13,7 +13,7 @@
           data-bs-toggle="collapse" data-bs-target="#collapse_" aria-expanded="false" aria-controls="collapseExample">
           Connections in common ()
         </button>
-        <button id="create_request_btn_" class="btn btn-danger me-1">Remove Connection</button>
+        <button id="create_request_btn_" class="btn btn-danger me-1" onclick="removeConnection({{$user->id}})">Remove Connection</button>
       </div>
   
     </div>
